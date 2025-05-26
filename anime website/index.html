@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiracyFlix - Stream Unlimited</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<title>
+    
+<body>
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="auth-header">
+                <h1 class="brand-logo">PIRACYFLIX</h1>
+                <h2 id="authTitle">Sign In</h2>
+            </div>
+            
+            <form id="authForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" style="display: none;">
+                <button type="submit" id="authButton">Sign In</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p id="authToggleText">Don't have an account? 
+                    <span id="authToggle">Sign Up</span>
+                </p>
+                <div class="demo-info">
+                    <p>Demo: Use any email and password to sign in</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <h1 class="brand-logo">PIRACYFLIX</h1>
+                    <nav class="nav-menu">
+                        <button class="nav-item active" data-section="home">
+                            <i class="fas fa-home"></i> Home
+                        </button>
+                        <button class="nav-item" data-section="tvshows">
+                            <i class="fas fa-tv"></i> TV Shows
+                        </button>
+                        <button class="nav-item" data-section="movies">
+                            <i class="fas fa-film"></i> Movies
+                        </button>
+                        <button class="nav-item" data-section="mylist">
+                            <i class="fas fa-list"></i> My List
+                        </button>
+                    </nav>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="search-container">
+                        <button id="searchToggle" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" placeholder="Search movies...">
+                        </form>
+                    </div>
+                    
+                    <div class="user-menu">
+                        <button class="user-btn">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="dropdown">
+                            <button id="logoutBtn">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="homeSection" class="content-section active">
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <span class="featured-label">Featured Movie</span>
+                        <h1 class="hero-title">The Matrix</h1>
+                        <div class="hero-info">
+                            <span class="rating">R</span>
+                            <span>1999</span>
+                            <span>2h 16m</span>
+                        </div>
+                        <p class="hero-description">
+                            A computer programmer discovers a mysterious world beyond reality and must choose between staying in a comfortable simulation or facing the truth.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn-primary" onclick="playTrailer('vKQi3bBA1y8', 'The Matrix')">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <button class="btn-secondary" onclick="toggleMyList(1)">
+                                <i class="fas fa-plus"></i> My List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Carousels -->
+                <div class="carousel-container">
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Trending Now</h2>
+                        <div class="movie-row" id="trendingMovies"></div>
+                    </div>
+                    
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Action Movies</h2>
+                        <div class="movie-row" id="actionMovies"></div>
+                    </div>
+                    
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Drama Series</h2>
+                        <div class="movie-row" id="dramaMovies"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TV Shows Section -->
+            <section id="tvshowsSection" class="content-section">
+                <h1 class="section-title">TV Shows</h1>
+                <div class="carousel-container">
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Popular Shows</h2>
+                        <div class="movie-row" id="popularShows"></div>
+                    </div>
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Comedy Shows</h2>
+                        <div class="movie-row" id="comedyShows"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Movies Section -->
+            <section id="moviesSection" class="content-section">
+                <h1 class="section-title">Movies</h1>
+                <div class="carousel-container">
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Latest Movies</h2>
+                        <div class="movie-row" id="latestMovies"></div>
+                    </div>
+                    <div class="movie-carousel">
+                        <h2 class="carousel-title">Sci-Fi Movies</h2>
+                        <div class="movie-row" id="scifiMovies"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My List Section -->
+            <section id="mylistSection" class="content-section">
+                <h1 class="section-title">My List</h1>
+                <div id="myListContent" class="my-list-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Trailer Modal -->
+    <div id="trailerModal" class="modal">
+        <div class="trailer-modal-content">
+            <div class="trailer-header">
+                <h3 id="trailerTitle">Movie Trailer</h3>
+                <button id="closeTrailer" class="close-btn">&times;</button>
+            </div>
+            <div class="trailer-container">
+                <iframe id="trailerIframe" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="standalone.js"></script>
+    <!-- <script>
+        // Simple auth check on page load
+        if (localStorage.getItem('currentUser')) {
+          document.getElementById('mainApp').style.display = 'block';
+        } else {
+          document.getElementById('authModal').style.display = 'flex';
+        }
+      </script> -->
+</body>
+</html>
